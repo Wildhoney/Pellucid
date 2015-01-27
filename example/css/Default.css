@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    width: 100%;
+}
+
+div.background {
+    background: transparent url('http://img2.goodfon.su/original/1680x1050/8/42/hong-kong-island-victoria.jpg') no-repeat center center;
+    position: absolute;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+section[is="pellucid-container"] {
+    width: 400px;
+    height: 300px;
+    display: inline-block;
+    position: absolute;
+    top: 300px;
+    left: 150px;
+}
+
+section[is="pellucid-container"] div.content {
+    background-color: rgba(255, 255, 255, .15);
+    padding: 20px;
+}
+
+section[is="pellucid-container"] div.content h1 {
+    font-family: Lato, Arial, Tahoma Helvetica, sans-serif;
+    color: white;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .25);
+    text-transform: uppercase;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
