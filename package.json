@@ -1,7 +1,7 @@
 {
   "name": "pellucid",
   "version": "0.1.0",
-  "description": "",
+  "description": "Experimental module using HTML5's Custom Elements that creates a crystalline blurred background for a modal.",
   "main": "dist/pellucid.min.js",
   "directories": {
     "example": "example"
