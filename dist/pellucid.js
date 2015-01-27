@@ -36,6 +36,8 @@
             frameElement = $document.querySelector('html');
             frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
+            frameElement.style.filter = 'blur(2px)';
+            frameElement.style.mozFilter = 'blur(2px)';
             frameElement.style.webkitFilter = 'blur(2px)';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';

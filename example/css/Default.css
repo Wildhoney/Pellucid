@@ -10,7 +10,7 @@ body, html {
 }
 
 div.background {
-    background: transparent url('http://img2.goodfon.su/original/1680x1050/8/42/hong-kong-island-victoria.jpg') no-repeat center center;
+    background: transparent url('../images/hong-kong-island-victoria.jpg') no-repeat center center;
     position: absolute;
     background-size: cover;
     top: 0;

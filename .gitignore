@@ -1,2 +1,9 @@
-/node_modules
+# IDE
 /.idea
+
+# npm
+/node_modules
+
+# Bower
+/example/vendor/*
+!/example/vendor/.gitkeep
