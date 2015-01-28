@@ -5,7 +5,7 @@
   "authors": [
     "Adam Timberlake <adam.timberlake@gmail.com>"
   ],
-  "description": "Experimental module using HTML5's Custom Elements that creates a crystalline blurred background for a modal.",
+  "description": "Experimental module using HTML5's Custom Elements that creates a crystalline blurred background.",
   "main": "dist/pellucid.min.js",
   "license": "MIT",
   "ignore": [
