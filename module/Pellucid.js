@@ -1,3 +1,9 @@
+/**
+ * @module Pellucid
+ * @author Adam Timberlake
+ * @link https://github.com/Wildhoney/Pellucid
+ * @version $Id$
+ */
 (function main($window, $document) {
 
     "use strict";
@@ -101,9 +107,30 @@
          */
         frameElementJustify: function frameElementJustify(rootElement, frameElement) {
 
+            /**
+             * @method computedStyle
+             * @param which {String}
+             * @return {Number}
+             */
+            var computedStyle = function computedStyle(which) {
+
+                var value = $window.getComputedStyle(rootElement)[which];
+
+                if (rootElement.style.transform) {
+
+                    var match = String(rootElement.style.transform).match(/(?:((?:\-)?\d+)px)/g);
+                    var index = (which === 'top') ? 1 : 0;
+                    value     = parseInt(value) + parseInt(match[index]);
+
+                }
+
+                return value;
+
+            };
+
             var contentWindow = frameElement.contentWindow;
-            var elementTop    = $window.getComputedStyle(rootElement).top;
-            var elementLeft   = $window.getComputedStyle(rootElement).left;
+            var elementTop    = computedStyle('top');
+            var elementLeft   = computedStyle('left');
             contentWindow.scrollTo(parseInt(elementLeft), parseInt(elementTop));
 
         },
@@ -178,7 +205,7 @@
             frameElement = $document.querySelector('html');
             frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
-            frameElement.style.webkitFilter = 'blur(5px)';
+            //frameElement.style.webkitFilter = 'blur(5px)';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';
             frameElement.style.position = 'absolute';
@@ -300,7 +327,7 @@
 
                 // Attach all of the content elements back into the content element.
                 pellucid.reattachContentElements(contentElement, contentElements);
-                
+
                 // Append the frame to the background element, and then style it.
                 pellucid.addFrameElement(frameElement, backgroundElement);
                 pellucid.styleFrameElement(frameElement);
@@ -311,6 +338,14 @@
                     pellucid.addRenderListener(this, frameElement);
 
                 }
+
+                var draggie = new Draggabilly(this, {
+                    // options...
+                });
+
+                draggie.on('dragMove', function() {
+                    pellucid.frameElementJustify(this, frameElement);
+                }.bind(this));
 
             }
 

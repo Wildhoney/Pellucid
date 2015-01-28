@@ -16,6 +16,7 @@
     "tests"
   ],
   "devDependencies": {
-    "document-register-element": "~0.1.6"
+    "document-register-element": "~0.1.6",
+    "draggabilly": "~1.1.1"
   }
 }
