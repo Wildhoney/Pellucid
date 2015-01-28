@@ -23,3 +23,8 @@ deploy:
   app: pellucid
   on:
     repo: Wildhoney/Pellucid
+
+env:
+  global:
+    - secure: P36W/MYFAcjkpT6LGjwJbzYynlc2ROgl4FUt/VYo8OijXWy4Ar3/YgDA/0Etp0Nl6Q05HAkIZyRbVZdGj+XYalf38wPSLkmIHgfFu8YzmunDkMhBtmsDsdNE4JPawW+NMVgyBWFMYPkYiyUQ+gCF6nmibqKQTDyi04+CpJWFVkk=
+    - secure: hlvQm1mKita0lk+f8nse1mXEIfaJWR/uLhySRYYfA9gfUmqIOwaRIzobzaOUDcxU+QPLPGQIxo8+xc2cEr1RSHPs3jEDgPDj3aBbSCIu1AKd64lokMdUscVKLlHnR7LIQDULm7BPacUZPRy6Q1OaCiAkdimYPstmVxttHLWhZ/o=
