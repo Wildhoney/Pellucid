@@ -294,8 +294,6 @@
 
             $window.onresize = function onResize() {
 
-                console.log('Ah');
-
                 var computedStyle = $window.getComputedStyle(bodyElement);
 
                 // Emit the event to the frame element listener.
