@@ -23,7 +23,7 @@
 
     });
 
-    gulp.task('karma', function karmaTests() {
+    gulp.task('karma', function gulpKarma() {
 
         return gulp.src([])
             .pipe(karma({
