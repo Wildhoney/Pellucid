@@ -2,7 +2,6 @@
  * @module Pellucid
  * @author Adam Timberlake
  * @link https://github.com/Wildhoney/Pellucid
- * @version $Id$
  */
 (function main($window, $document) {
 
@@ -27,10 +26,46 @@
     PellucidElement.prototype = {
 
         /**
-         * @property frameElement
-         * @type {HTMLElement|null}
+         * @property options
+         * @type {Object}
          */
-        frameElement: null,
+        options: {
+            blur: '5px'
+        },
+
+        /**
+         * @method setOptions
+         * @param rootElement {HTMLElement}
+         * @return {void}
+         */
+        setOptions: function setOptions(rootElement) {
+
+            for (var attributeName in rootElement.attributes) {
+
+                if (rootElement.attributes.hasOwnProperty(attributeName)) {
+
+                    var attribute = rootElement.attributes[attributeName];
+
+                    if (attribute.name) {
+
+                        // Remove any data attributes.
+                        var name = attribute.name.toLowerCase().replace(/^data-/i, '');
+
+                        if (name.match(/^pellucid-/)) {
+
+                            // Remove the "pellucid" attribute from the name if it exists.
+                            name = name.replace(/^pellucid-/i, '');
+                            this.options[name] = attribute.nodeValue
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        },
 
         /**
          * @method applyParentStyles
@@ -42,9 +77,9 @@
             frameElement = $document.querySelector('html');
             frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
-            frameElement.style.filter = 'blur(2px)';
-            frameElement.style.mozFilter = 'blur(2px)';
-            frameElement.style.webkitFilter = 'blur(2px)';
+            frameElement.style.filter = 'blur(' + this.options.blur + ')';
+            frameElement.style.mozFilter = 'blur(' + this.options.blur + ')';
+            frameElement.style.webkitFilter = 'blur(' + this.options.blur + ')';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';
             frameElement.style.position = 'absolute';
@@ -85,6 +120,7 @@
         createFrameElement: function createFrameElement(rootElement) {
 
             var frameElement = $document.createElement('iframe');
+            frameElement.className = 'pellucid';
             frameElement.src = $document.URL;
 
             /**
@@ -103,9 +139,16 @@
          * @method frameElementJustify
          * @param rootElement {HTMLElement}
          * @param frameElement {HTMLElement}
-         * @return {void}
+         * @return {Object}
          */
         frameElementJustify: function frameElementJustify(rootElement, frameElement) {
+
+            if (!frameElement) {
+
+                // Find the frame element if it hasn't been passed in.
+                frameElement = rootElement.querySelector('iframe.pellucid');
+
+            }
 
             /**
              * @method computedStyle
@@ -129,9 +172,11 @@
             };
 
             var contentWindow = frameElement.contentWindow;
-            var elementTop    = computedStyle('top');
-            var elementLeft   = computedStyle('left');
-            contentWindow.scrollTo(parseInt(elementLeft), parseInt(elementTop));
+            var elementTop    = isNaN(parseInt(computedStyle('top'))) ? 0 : parseInt(computedStyle('top'));
+            var elementLeft   = isNaN(parseInt(computedStyle('left'))) ? 0 : parseInt(computedStyle('left'));
+            contentWindow.scrollTo(elementLeft, elementTop);
+
+            return { left: elementLeft, top: elementTop };
 
         },
 
@@ -205,7 +250,7 @@
             frameElement = $document.querySelector('html');
             frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
-            //frameElement.style.webkitFilter = 'blur(5px)';
+            frameElement.style.webkitFilter = 'blur(5px)';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';
             frameElement.style.position = 'absolute';
@@ -248,6 +293,8 @@
             var bodyElement = $document.querySelector('body');
 
             $window.onresize = function onResize() {
+
+                console.log('Ah');
 
                 var computedStyle = $window.getComputedStyle(bodyElement);
 
@@ -317,35 +364,29 @@
              */
             value: function value() {
 
-                var pellucid        = new PellucidElement();
-                var frameElement    = pellucid.createFrameElement(this);
-                var contentElements = pellucid.removeContentNodes(this);
+                this.pellucid = new PellucidElement();
+                this.pellucid.setOptions(this);
+
+                var frameElement    = this.pellucid.createFrameElement(this);
+                var contentElements = this.pellucid.removeContentNodes(this);
 
                 // Create the markup for the container.
-                var backgroundElement = pellucid.createStructureElement(this, 'background');
-                var contentElement    = pellucid.createStructureElement(this, 'content');
+                var backgroundElement = this.pellucid.createStructureElement(this, 'background');
+                var contentElement    = this.pellucid.createStructureElement(this, 'content');
 
                 // Attach all of the content elements back into the content element.
-                pellucid.reattachContentElements(contentElement, contentElements);
+                this.pellucid.reattachContentElements(contentElement, contentElements);
 
                 // Append the frame to the background element, and then style it.
-                pellucid.addFrameElement(frameElement, backgroundElement);
-                pellucid.styleFrameElement(frameElement);
+                this.pellucid.addFrameElement(frameElement, backgroundElement);
+                this.pellucid.styleFrameElement(frameElement);
 
-                if (pellucid.isParent(frameElement)) {
+                if (this.pellucid.isParent(frameElement)) {
 
                     // Listen for when we need to re-render.
-                    pellucid.addRenderListener(this, frameElement);
+                    this.pellucid.addRenderListener(this, frameElement);
 
                 }
-
-                var draggie = new Draggabilly(this, {
-                    // options...
-                });
-
-                draggie.on('dragMove', function() {
-                    pellucid.frameElementJustify(this, frameElement);
-                }.bind(this));
 
             }
 
@@ -357,7 +398,7 @@
      * @property PellucidContainer
      * @type {Object}
      */
-    $document.registerElement(ELEMENT_NAME, {
+    $window.PellucidElement = $document.registerElement(ELEMENT_NAME, {
         prototype: prototype,
         extends: 'section'
     });

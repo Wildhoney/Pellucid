@@ -14,13 +14,34 @@
     <script type="text/javascript" src="vendor/draggabilly/dist/draggabilly.pkgd.js"></script>
     <script type="text/javascript" src="vendor/pellucid/pellucid.js"></script>
 
+    <!-- Modifying -->
+    <script type="text/javascript">
+
+        document.addEventListener('DOMContentLoaded', function onDOMContentLoaded() {
+
+            var elements = document.querySelectorAll('section[is="pellucid-container"]');
+
+            for (var index = 0, maxLength = elements.length; index < maxLength; index++) {
+
+                var drag = new Draggabilly(elements[index], {});
+
+                drag.on('dragMove', function onDragMove() {
+                    this.pellucid.frameElementJustify(this);
+                }.bind(elements[index]));
+
+            }
+
+        });
+
+    </script>
+
 </head>
 <body>
 
     <div class="background"></div>
 
-    <section is="pellucid-container">
-        <!--<h1>First Example</h1>-->
+    <section is="pellucid-container" data-pellucid-blur="2px">
+        <h1>First Example</h1>
     </section>
 
 </body>

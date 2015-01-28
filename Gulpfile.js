@@ -8,7 +8,8 @@
     var gulp   = require('gulp'),
         uglify = require('gulp-uglify'),
         rename = require('gulp-rename'),
-        jshint = require('gulp-jshint');
+        jshint = require('gulp-jshint'),
+        karma  = require('gulp-karma');
 
     gulp.task('build', function gulpBuild() {
 
@@ -22,6 +23,19 @@
 
     });
 
+    gulp.task('karma', function karmaTests() {
+
+        return gulp.src([])
+            .pipe(karma({
+                configFile: 'karma.conf.js',
+                action: 'run'
+            }))
+            .on('error', function onError(error) {
+                throw error;
+            });
+
+    });
+
     gulp.task('hint', function gulpHint() {
 
         return gulp.src(mainModule)
@@ -30,7 +44,7 @@
 
     });
 
-    gulp.task('test', ['hint']);
+    gulp.task('test', ['hint', 'karma']);
     gulp.task('default', ['test', 'build']);
 
 })();
