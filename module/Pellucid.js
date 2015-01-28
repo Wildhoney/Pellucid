@@ -55,7 +55,11 @@
 
                             // Remove the "pellucid" attribute from the name if it exists.
                             name = name.replace(/^pellucid-/i, '');
-                            this.options[name] = attribute.nodeValue
+                            this.options[name] = attribute.value;
+
+                            // Remove the attributes from the root element.
+                            rootElement.removeAttribute('pellucid-' + name);
+                            rootElement.removeAttribute('data-pellucid-' + name);
 
                         }
 

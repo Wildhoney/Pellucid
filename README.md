@@ -25,13 +25,13 @@ With the above code `Pellucid` should create a crystalline background for you! U
 `Pellucid` will render the following HTML structure given the above code:
 
 ```html
-<section is="pellucid-container" data-pellucid-blur="15px" style="...">
-<div class="background" style="...">
-    <iframe class="pellucid" src="http://localhost:5000/"></iframe>
-</div>
-<div class="content" style="...">
-    <h1>Drag Me…</h1>
-</div>
+<section is="pellucid-container" style="...">
+    <div class="background" style="...">
+        <iframe class="pellucid" src="http://localhost:5000/"></iframe>
+    </div>
+    <div class="content" style="...">
+        <h1>Drag Me…</h1>
+    </div>
 </section>
 ```
 

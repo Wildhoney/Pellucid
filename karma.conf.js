@@ -1,8 +1,7 @@
 module.exports = function(config) {
 
     // Determine which strategy to use based on the `SAUCE_ACCESS_KEY` env.
-    //const KARMA_STRATEGY = process.env.SAUCE_ACCESS_KEY ? 'saucelabs' : 'localhost';
-    var KARMA_STRATEGY = 'saucelabs';
+    const KARMA_STRATEGY = process.env.SAUCE_ACCESS_KEY ? 'saucelabs' : 'localhost';
 
     var options = {
         frameworks: ['jasmine'],

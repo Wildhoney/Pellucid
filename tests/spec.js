@@ -21,6 +21,7 @@
             expect(element.nodeName.toLowerCase()).toEqual('section');
             expect(element.getAttribute('is')).toEqual('pellucid-container');
             expect(element.pellucid.options.blur).toEqual('10px');
+            expect(element.getAttribute('data-pellucid-blur')).toBeNull();
 
             // Element markup.
             expect(element.childNodes[0].className).toEqual('background');
