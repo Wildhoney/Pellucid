@@ -9,7 +9,7 @@ body, html {
     width: 100%;
 }
 
-div.background {
+div.main-background {
     background: transparent url('../images/green-hills.jpg') no-repeat center center;
     position: absolute;
     background-size: cover;
@@ -22,15 +22,18 @@ div.background {
 section[is="pellucid-container"] {
     width: 400px;
     height: 300px;
-    display: inline-block;
-    position: absolute;
     top: 100px;
     left: 150px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, .25);
 }
 
 section[is="pellucid-container"] div.content {
-    background-color: rgba(255, 255, 255, .15);
-    padding: 20px;
+    background-color: rgba(255, 255, 255, .25);
+    border: 1px solid rgba(255, 255, 255, .15);
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+    cursor: move;
 }
 
 section[is="pellucid-container"] div.content h1 {

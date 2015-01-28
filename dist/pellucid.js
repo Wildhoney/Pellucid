@@ -68,25 +68,6 @@
         },
 
         /**
-         * @method applyParentStyles
-         * @param frameElement {HTMLElement}
-         * @return {void}
-         */
-        applyParentStyles: function applyParentStyles(frameElement) {
-
-            frameElement = $document.querySelector('html');
-            frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
-            frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
-            frameElement.style.filter = 'blur(' + this.options.blur + ')';
-            frameElement.style.mozFilter = 'blur(' + this.options.blur + ')';
-            frameElement.style.webkitFilter = 'blur(' + this.options.blur + ')';
-            frameElement.style.overflow = 'hidden';
-            frameElement.style.pointerEvents = 'none';
-            frameElement.style.position = 'absolute';
-
-        },
-
-        /**
          * @method removeAllContainers
          * @return {void}
          */
@@ -250,10 +231,15 @@
             frameElement = $document.querySelector('html');
             frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
-            frameElement.style.webkitFilter = 'blur(5px)';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';
             frameElement.style.position = 'absolute';
+
+            // Apply the filter blur styles!
+            frameElement.style.filter = 'blur(' + this.options.blur + ')';
+            frameElement.style.oFilter = 'blur(' + this.options.blur + ')';
+            frameElement.style.mozFilter = 'blur(' + this.options.blur + ')';
+            frameElement.style.webkitFilter = 'blur(' + this.options.blur + ')';
 
             /**
              * @method onmessage
@@ -293,8 +279,6 @@
             var bodyElement = $document.querySelector('body');
 
             $window.onresize = function onResize() {
-
-                console.log('Ah');
 
                 var computedStyle = $window.getComputedStyle(bodyElement);
 
