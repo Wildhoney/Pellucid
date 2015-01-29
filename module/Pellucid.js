@@ -18,7 +18,10 @@
      * @type {Object}
      */
     var EVENT_LIST = {
-        WIDTH_HEIGHT: 'width-height'
+        WIDTH_HEIGHT: 'width-height',
+        OFFSET_TOP: 'offset-top',
+        OFFSET_LEFT: 'offset-left',
+        OFFSET_RESET: 'offset-reset'
     };
 
     /**
@@ -58,11 +61,12 @@
 
                         // Remove any data attributes.
                         var name = attribute.name.toLowerCase().replace(/^data-/i, '');
+                        var nameMatch = new RegExp('^pellucid-', 'i');
 
-                        if (name.match(/^pellucid-/)) {
+                        if (name.match(nameMatch)) {
 
                             // Remove the "pellucid" attribute from the name if it exists.
-                            name = name.replace(/^pellucid-/i, '');
+                            name = name.replace(nameMatch, '');
                             this.options[name] = attribute.value;
 
                             // Remove the attributes from the root element.
@@ -167,9 +171,66 @@
             var contentWindow = frameElement.contentWindow;
             var elementTop    = isNaN(parseInt(computedStyle('top'))) ? 0 : parseInt(computedStyle('top'));
             var elementLeft   = isNaN(parseInt(computedStyle('left'))) ? 0 : parseInt(computedStyle('left'));
+
+            // Adjust the frame's scroll offsets.
+            this.computeFrameOffsets(rootElement, frameElement, elementTop, elementLeft);
             contentWindow.scrollTo(elementLeft, elementTop);
 
             return { left: elementLeft, top: elementTop };
+
+        },
+
+        /**
+         * @method computeFrameOffsets
+         * @param rootElement {HTMLElement}
+         * @param frameElement {HTMLElement}
+         * @param positionTop {Number}
+         * @param positionLeft {Number}
+         * @return {void}
+         */
+        computeFrameOffsets: function computeFrameOffsets(rootElement, frameElement, positionTop, positionLeft) {
+
+            var rootElementWidth = parseInt($window.getComputedStyle(rootElement).getPropertyValue('width'));
+            var viewportWidth    = $window.innerWidth;
+
+            /**
+             * @method emitEvent
+             * @param eventName {String}
+             * @param metaData {Object}
+             * @return {void}
+             */
+            var emitEvent = function emitEvent(eventName, metaData) {
+
+                // Emit the event to the frame element listener.
+                frameElement.contentWindow.postMessage({
+
+                    name: eventName,
+                    params: metaData
+
+                }, '*');
+
+            };
+
+            // Emit the event to reset all offset computations.
+            emitEvent(EVENT_LIST.OFFSET_RESET);
+
+            if (positionLeft < 0) {
+
+                // Element is situated to the left of the viewport.
+                emitEvent(EVENT_LIST.OFFSET_LEFT, {
+                    offsetLeft: Math.abs(positionLeft)
+                });
+
+            }
+
+            if ((rootElementWidth + positionLeft) > viewportWidth) {
+
+                // Element is situated to the right of the viewport.
+                emitEvent(EVENT_LIST.OFFSET_LEFT, {
+                    offsetLeft: -Math.abs(positionLeft)
+                });
+
+            }
 
         },
 
@@ -267,6 +328,14 @@
                         frameElement.style.width  = event.data.params.width;
                         break;
 
+                    case (EVENT_LIST.OFFSET_LEFT):
+                        frameElement.style.marginLeft = event.data.params.offsetLeft + 'px';
+                        break;
+
+                    case (EVENT_LIST.OFFSET_RESET):
+                        frameElement.style.marginLeft = 0;
+                        frameElement.style.marginTop  = 0;
+                        break;
 
                 }
             };
@@ -298,6 +367,10 @@
 
             var bodyElement = $document.querySelector('body');
 
+            /**
+             * @property onresize
+             * @type {function(this:PellucidElement)|*}
+             */
             $window.onresize = function onResize() {
 
                 var computedStyle = $window.getComputedStyle(bodyElement);

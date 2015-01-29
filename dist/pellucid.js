@@ -14,6 +14,14 @@
     var ELEMENT_NAME = 'pellucid-container';
 
     /**
+     * @constant EVENT_LIST
+     * @type {Object}
+     */
+    var EVENT_LIST = {
+        WIDTH_HEIGHT: 'width-height'
+    };
+
+    /**
      * @property PellucidElement
      * @constructor
      */
@@ -50,11 +58,12 @@
 
                         // Remove any data attributes.
                         var name = attribute.name.toLowerCase().replace(/^data-/i, '');
+                        var nameMatch = new RegExp('^pellucid-', 'i');
 
-                        if (name.match(/^pellucid-/)) {
+                        if (name.match(nameMatch)) {
 
                             // Remove the "pellucid" attribute from the name if it exists.
-                            name = name.replace(/^pellucid-/i, '');
+                            name = name.replace(nameMatch, '');
                             this.options[name] = attribute.value;
 
                             // Remove the attributes from the root element.
@@ -251,8 +260,16 @@
              * @return {void}
              */
             $window.onmessage = function onMessage(event) {
-                frameElement.style.height = event.data.height;
-                frameElement.style.width  = event.data.width;
+
+                switch (event.data.name) {
+
+                    case (EVENT_LIST.WIDTH_HEIGHT):
+                        frameElement.style.height = event.data.params.height;
+                        frameElement.style.width  = event.data.params.width;
+                        break;
+
+
+                }
             };
 
         },
@@ -282,14 +299,23 @@
 
             var bodyElement = $document.querySelector('body');
 
+            /**
+             * @property onresize
+             * @type {function(this:PellucidElement)|*}
+             */
             $window.onresize = function onResize() {
 
                 var computedStyle = $window.getComputedStyle(bodyElement);
 
                 // Emit the event to the frame element listener.
                 frameElement.contentWindow.postMessage({
-                    height: computedStyle.getPropertyValue('height'),
-                    width: computedStyle.getPropertyValue('width')
+
+                    name: EVENT_LIST.WIDTH_HEIGHT,
+                    params: {
+                        width: computedStyle.getPropertyValue('width'),
+                        height: computedStyle.getPropertyValue('height')
+                    }
+
                 }, '*');
 
             }.bind(this);
