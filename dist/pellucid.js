@@ -190,8 +190,10 @@
          */
         computeFrameOffsets: function computeFrameOffsets(rootElement, frameElement, positionTop, positionLeft) {
 
-            var rootElementWidth = parseInt($window.getComputedStyle(rootElement).getPropertyValue('width'));
-            var viewportWidth    = $window.innerWidth;
+            var rootElementWidth  = parseInt($window.getComputedStyle(rootElement).getPropertyValue('width'));
+            var rootElementHeight = parseInt($window.getComputedStyle(rootElement).getPropertyValue('height'));
+            var viewportWidth     = $window.innerWidth;
+            var viewportHeight    = $window.innerHeight;
 
             /**
              * @method emitEvent
@@ -228,6 +230,24 @@
                 // Element is situated to the right of the viewport.
                 emitEvent(EVENT_LIST.OFFSET_LEFT, {
                     offsetLeft: -Math.abs(positionLeft)
+                });
+
+            }
+
+            if (positionTop < 0) {
+
+                // Element is situated to the top of the viewport.
+                emitEvent(EVENT_LIST.OFFSET_TOP, {
+                    offsetTop: Math.abs(positionTop)
+                });
+
+            }
+
+            if ((rootElementHeight + positionTop) > viewportHeight) {
+
+                // Element is situated to the bottom of the viewport.
+                emitEvent(EVENT_LIST.OFFSET_TOP, {
+                    offsetTop: -Math.abs(positionTop)
                 });
 
             }
@@ -330,6 +350,10 @@
 
                     case (EVENT_LIST.OFFSET_LEFT):
                         frameElement.style.marginLeft = event.data.params.offsetLeft + 'px';
+                        break;
+
+                    case (EVENT_LIST.OFFSET_TOP):
+                        frameElement.style.marginTop= event.data.params.offsetTop + 'px';
                         break;
 
                     case (EVENT_LIST.OFFSET_RESET):
