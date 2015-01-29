@@ -14,6 +14,14 @@
     var ELEMENT_NAME = 'pellucid-container';
 
     /**
+     * @constant EVENT_LIST
+     * @type {Object}
+     */
+    var EVENT_LIST = {
+        WIDTH_HEIGHT: 'width-height'
+    };
+
+    /**
      * @property PellucidElement
      * @constructor
      */
@@ -251,8 +259,16 @@
              * @return {void}
              */
             $window.onmessage = function onMessage(event) {
-                frameElement.style.height = event.data.height;
-                frameElement.style.width  = event.data.width;
+
+                switch (event.data.name) {
+
+                    case (EVENT_LIST.WIDTH_HEIGHT):
+                        frameElement.style.height = event.data.params.height;
+                        frameElement.style.width  = event.data.params.width;
+                        break;
+
+
+                }
             };
 
         },
@@ -288,8 +304,13 @@
 
                 // Emit the event to the frame element listener.
                 frameElement.contentWindow.postMessage({
-                    height: computedStyle.getPropertyValue('height'),
-                    width: computedStyle.getPropertyValue('width')
+
+                    name: EVENT_LIST.WIDTH_HEIGHT,
+                    params: {
+                        width: computedStyle.getPropertyValue('width'),
+                        height: computedStyle.getPropertyValue('height')
+                    }
+
                 }, '*');
 
             }.bind(this);
