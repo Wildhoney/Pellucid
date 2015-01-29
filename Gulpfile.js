@@ -26,7 +26,8 @@
 
     gulp.task('checksum', ['compile-js'], function gulpChecksum() {
 
-        return gulp.src('dist/*')
+        return gulp.src(['dist/' + devDist, 'dist/' + minDist])
+            .pipe(hashsum({ dest: 'dist', hash: 'md5' }))
             .pipe(hashsum({ dest: 'dist', hash: 'sha1' }))
             .pipe(hashsum({ dest: 'dist', hash: 'sha256' }))
 
