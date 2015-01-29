@@ -5,13 +5,14 @@
         devDist    = 'pellucid.js',
         minDist    = 'pellucid.min.js';
 
-    var gulp   = require('gulp'),
-        uglify = require('gulp-uglify'),
-        rename = require('gulp-rename'),
-        jshint = require('gulp-jshint'),
-        karma  = require('gulp-karma');
+    var gulp    = require('gulp'),
+        uglify  = require('gulp-uglify'),
+        rename  = require('gulp-rename'),
+        jshint  = require('gulp-jshint'),
+        karma   = require('gulp-karma'),
+        hashsum = require('gulp-hashsum');
 
-    gulp.task('build', function gulpBuild() {
+    gulp.task('compile-js', function gulpCompileJs() {
 
         return gulp.src(mainModule)
             .pipe(rename(devDist))
@@ -20,6 +21,14 @@
             .pipe(rename(minDist))
             .pipe(uglify())
             .pipe(gulp.dest('dist'));
+
+    });
+
+    gulp.task('checksum', ['compile-js'], function gulpChecksum() {
+
+        return gulp.src('dist/*')
+            .pipe(hashsum({ dest: 'dist', hash: 'sha1' }))
+            .pipe(hashsum({ dest: 'dist', hash: 'sha256' }))
 
     });
 
@@ -45,6 +54,7 @@
     });
 
     gulp.task('test', ['hint', 'karma']);
+    gulp.task('build', ['compile-js', 'checksum']);
     gulp.task('default', ['test', 'build']);
 
 })();
