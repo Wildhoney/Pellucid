@@ -17,21 +17,35 @@
     <!-- Modifying -->
     <script type="text/javascript">
 
-        document.addEventListener('DOMContentLoaded', function onDOMContentLoaded() {
+        /**
+         * Responsible for making the container draggable for demo purposes.
+         *
+         * @method makeDraggable
+         * @return {void}
+         */
+        (function makeDraggable($document) {
 
-            var elements = document.querySelectorAll('section[is="pellucid-container"]');
+            $document.addEventListener('DOMContentLoaded', function onDOMContentLoaded() {
 
-            for (var index = 0, maxLength = elements.length; index < maxLength; index++) {
+                var elements = $document.querySelectorAll('section[is="pellucid-container"]');
 
-                var drag = new Draggabilly(elements[index], {});
+                for (var index = 0, maxLength = elements.length; index < maxLength; index++) {
 
-                drag.on('dragMove', function onDragMove() {
-                    this.pellucid.frameElementJustify(this);
-                }.bind(elements[index]));
+                    var drag = new Draggabilly(elements[index], {});
 
-            }
+                    drag.on('dragMove', function onDragMove() {
 
-        });
+                        // Element is rejustified when it is being dragged to align the crystalline
+                        // blurred background to the element's position.
+                        this.pellucid.frameElementJustify(this);
+
+                    }.bind(elements[index]));
+
+                }
+
+            });
+
+        })(document);
 
     </script>
 
