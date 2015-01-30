@@ -13,6 +13,15 @@
             return $document.body.appendChild(element);
         };
 
+        beforeEach(function beforeEach() {
+
+            // Mock the `isInFrame` method to always return false.
+            $window.isInFrame = function mockIsInFrame() {
+                return false;
+            }
+
+        });
+
         it('Should be able to register the element and setup the HTML;', function() {
 
             var element = createElement();
@@ -35,7 +44,7 @@
             var element = createElement();
             var frame   = element.querySelector('iframe');
 
-            expect(frame.getAttribute('src')).toEqual($document.URL);
+            expect(frame.getAttribute('src')).toEqual($document.URL + '?');
             expect(frame.contentWindow.scrollY).toEqual(0);
             expect(frame.contentWindow.scrollX).toEqual(0);
 

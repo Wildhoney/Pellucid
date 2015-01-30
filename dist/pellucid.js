@@ -25,6 +25,14 @@
     };
 
     /**
+     * @method isInFrame
+     * @return {Boolean}
+     */
+    var isInFrame = function isInFrame() {
+        return $window.self !== $window.top;
+    };
+
+    /**
      * @property PellucidElement
      * @constructor
      */
@@ -118,7 +126,7 @@
 
             var frameElement = $document.createElement('iframe');
             frameElement.className = 'pellucid';
-            frameElement.src = $document.URL;
+            frameElement.src = $document.URL + '?';
 
             /**
              * @method onload
@@ -296,26 +304,6 @@
         },
 
         /**
-         * Responsible for determining which method should be used to style the frame element, depending on whether
-         * it's a parent or a child.
-         *
-         * @method styleFrameElement
-         * @param frameElement {HTMLElement}
-         * @return {void}
-         */
-        styleFrameElement: function styleFrameElement(frameElement) {
-
-            if (this.isParent(frameElement)) {
-                this.styleParentFrameElement(frameElement);
-                return;
-            }
-
-            this.styleChildFrameElement(frameElement);
-            this.removeAllContainers();
-
-        },
-
-        /**
          * @method styleChildFrameElement
          * @param frameElement {HTMLElement}
          * @return {void}
@@ -327,7 +315,6 @@
             var parentWindowElement = $window.parent.window;
 
             frameElement.style.height = parentWindowElement.innerHeight + 'px';
-            //frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';
@@ -488,9 +475,19 @@
                 // Attach all of the content elements back into the content element.
                 this.pellucid.reattachContentElements(contentElement, contentElements);
 
+                if (isInFrame()) {
+
+                    // We're in the iFrame so we need to apply the styles, such as the crystalline
+                    // blurred background.
+                    this.pellucid.removeAllContainers();
+                    this.pellucid.styleChildFrameElement(frameElement);
+                    return;
+
+                }
+
                 // Append the frame to the background element, and then style it.
                 this.pellucid.addFrameElement(frameElement, backgroundElement);
-                this.pellucid.styleFrameElement(frameElement);
+                this.pellucid.styleParentFrameElement(frameElement);
 
                 if (this.pellucid.isParent(frameElement)) {
 

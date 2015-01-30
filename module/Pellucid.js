@@ -28,7 +28,7 @@
      * @method isInFrame
      * @return {Boolean}
      */
-    var isInFrame = function isInFrame() {
+    $window.isInFrame = function isInFrame() {
         return $window.self !== $window.top;
     };
 
@@ -475,7 +475,7 @@
                 // Attach all of the content elements back into the content element.
                 this.pellucid.reattachContentElements(contentElement, contentElements);
 
-                if (isInFrame()) {
+                if ($window.isInFrame()) {
 
                     // We're in the iFrame so we need to apply the styles, such as the crystalline
                     // blurred background.
