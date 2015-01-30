@@ -193,7 +193,8 @@
             var rootElementWidth  = parseInt($window.getComputedStyle(rootElement).getPropertyValue('width'));
             var rootElementHeight = parseInt($window.getComputedStyle(rootElement).getPropertyValue('height'));
             var viewportWidth     = $window.innerWidth;
-            var viewportHeight    = $window.innerHeight;
+            //var viewportHeight    = $window.innerHeight;
+            var viewportHeight    = $window.parseInt($window.getComputedStyle($document.querySelector('html')).getPropertyValue('height'));
 
             /**
              * @method emitEvent
@@ -322,7 +323,11 @@
         styleChildFrameElement: function styleChildFrameElement(frameElement) {
 
             frameElement = $document.querySelector('html');
-            frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
+
+            var parentWindowElement = $window.parent.window;
+
+            frameElement.style.height = parentWindowElement.innerHeight + 'px';
+            //frameElement.style.height = (parseInt(this.computedParentValue('height'))) + 'px';
             frameElement.style.width  = (parseInt(this.computedParentValue('width'))) + 'px';
             frameElement.style.overflow = 'hidden';
             frameElement.style.pointerEvents = 'none';
@@ -353,7 +358,7 @@
                         break;
 
                     case (EVENT_LIST.OFFSET_TOP):
-                        frameElement.style.marginTop= event.data.params.offsetTop + 'px';
+                        frameElement.style.marginTop = event.data.params.offsetTop + 'px';
                         break;
 
                     case (EVENT_LIST.OFFSET_RESET):
