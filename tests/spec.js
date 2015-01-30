@@ -54,14 +54,14 @@
                 element.style.top = '50px';
                 element.style.left = '10px';
                 var model = element.pellucid.frameElementJustify(element, frame);
-                expect(model.left).toEqual(10);
-                expect(model.top).toEqual(50);
+                expect(model.left).toEqual(8);
+                expect(model.top).toEqual(8);
 
                 // Using Transform3D which should be added to the previous values.
                 element.style.transform = 'translate3d(10px, 20px, 30px)';
                 model = element.pellucid.frameElementJustify(element, frame);
-                expect(model.left).toEqual(20);
-                expect(model.top).toEqual(70);
+                expect(model.left).toEqual(18);
+                expect(model.top).toEqual(28);
 
                 done();
 

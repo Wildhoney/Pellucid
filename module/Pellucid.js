@@ -162,12 +162,13 @@
              */
             var computedStyle = function computedStyle(which) {
 
-                var value = $window.getComputedStyle(rootElement)[which];
+                //var value = $window.getComputedStyle(rootElement)[which];
+                var value = rootElement[which];
 
                 if (rootElement.style.transform) {
 
                     var match = String(rootElement.style.transform).match(/(?:((?:\-)?\d+)px)/g);
-                    var index = (which === 'top') ? 1 : 0;
+                    var index = (which === 'offsetTop') ? 1 : 0;
                     value     = parseInt(value) + parseInt(match[index]);
 
                 }
@@ -177,8 +178,8 @@
             };
 
             var contentWindow = frameElement.contentWindow;
-            var elementTop    = isNaN(parseInt(computedStyle('top'))) ? 0 : parseInt(computedStyle('top'));
-            var elementLeft   = isNaN(parseInt(computedStyle('left'))) ? 0 : parseInt(computedStyle('left'));
+            var elementTop    = isNaN(parseInt(computedStyle('offsetTop'))) ? 0 : parseInt(computedStyle('offsetTop'));
+            var elementLeft   = isNaN(parseInt(computedStyle('offsetLeft'))) ? 0 : parseInt(computedStyle('offsetLeft'));
 
             // Adjust the frame's scroll offsets.
             this.computeFrameOffsets(rootElement, frameElement, elementTop, elementLeft);
@@ -201,7 +202,6 @@
             var rootElementWidth  = parseInt($window.getComputedStyle(rootElement).getPropertyValue('width'));
             var rootElementHeight = parseInt($window.getComputedStyle(rootElement).getPropertyValue('height'));
             var viewportWidth     = $window.innerWidth;
-            //var viewportHeight    = $window.innerHeight;
             var viewportHeight    = $window.parseInt($window.getComputedStyle($document.querySelector('html')).getPropertyValue('height'));
 
             /**

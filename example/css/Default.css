@@ -10,6 +10,10 @@ body, html {
     overflow: hidden;
 }
 
+body {
+    background: transparent url('../images/green-hills.jpg') no-repeat center center;
+}
+
 div.main-background {
     background: transparent url('../images/green-hills.jpg') no-repeat center center;
     position: absolute;
@@ -20,10 +24,21 @@ div.main-background {
     height: 100%;
 }
 
+h1 {
+    position: absolute;
+    font-family: Lato, Arial, Tahoma Helvetica, sans-serif;
+    color: white;
+    font-size: 25px;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .25);
+    text-transform: uppercase;
+    top: 20px;
+    left: 20px;
+}
+
 section[is="pellucid-container"] {
     width: 400px;
     height: 300px;
-    top: 100px;
+    top: 200px;
     left: 150px;
     box-shadow: 0 0 50px rgba(0, 0, 0, .25);
 }
@@ -37,7 +52,7 @@ section[is="pellucid-container"] div.content {
     cursor: move;
 }
 
-section[is="pellucid-container"] div.content h1 {
+section[is="pellucid-container"] div.content h2 {
     font-family: Lato, Arial, Tahoma Helvetica, sans-serif;
     color: white;
     font-size: 18px;
