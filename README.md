@@ -10,16 +10,18 @@
 
 As `Pellucid` is a highly experimental module, it requires a browser that supports [Custom Elements](http://caniuse.com/#search=custom%20element). With the lack of any screenshot API, `Pellucid` uses antiquated `iframe` elements to create a crystalline blurred background for your elements &ndash; as such there are certain downsides. `Pellucid` merely loads the current page in its default state, and therefore any elements which have been modified since the initial state will not be included in the crystalline background &ndash; this affects greatly SPAs and pages that use POST data. Considerations should also be taken for the duplicated page-load.
 
-![Screenshot](http://i.imgur.com/Azepeaq.png)
-
 ## Browser Support
 
-![Chrome](https://github.com/alrra/browser-logos/raw/master/chrome/chrome_32x32.png)
-![Firefox](https://github.com/alrra/browser-logos/raw/master/firefox/firefox_32x32.png)
-![Firefox](https://github.com/alrra/browser-logos/raw/master/opera/opera_32x32.png)
-![Safari](https://github.com/alrra/browser-logos/raw/master/safari/safari_32x32.png)
+![Chrome](https://github.com/alrra/browser-logos/raw/master/chrome/chrome_64x64.png)
+![Firefox](https://github.com/alrra/browser-logos/raw/master/firefox/firefox_64x64.png)
+![Firefox](https://github.com/alrra/browser-logos/raw/master/opera/opera_64x64.png)
+![Safari](https://github.com/alrra/browser-logos/raw/master/safari/safari_64x64.png)
 
 For browsers that do not support `createElement`, `Pellucid` should render as a translucent background without the crystalline blurred effect.
+
+![Screenshot](http://i.imgur.com/Azepeaq.png)
+
+---
 
 ## Getting Started
 
