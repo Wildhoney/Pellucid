@@ -12,6 +12,15 @@ As `Pellucid` is a highly experimental module, it requires a browser that suppor
 
 ![Screenshot](http://i.imgur.com/Azepeaq.png)
 
+## Browser Support
+
+![Chrome](https://github.com/alrra/browser-logos/raw/master/chrome/chrome_256x256.png)
+![Firefox](https://github.com/alrra/browser-logos/raw/master/firefox/firefox_256x256.png)
+![Firefox](https://github.com/alrra/browser-logos/raw/master/opera/opera_256x256.png)
+![Safari](https://github.com/alrra/browser-logos/raw/master/safari/safari_256x256.png)
+
+For browsers that do not support `createElement`, `Pellucid` should render as a translucent background without the crystalline blurred effect.
+
 ## Getting Started
 
 ```html
