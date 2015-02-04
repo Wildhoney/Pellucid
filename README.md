@@ -19,7 +19,7 @@ As `Pellucid` is a highly experimental module, it requires a browser that suppor
 ![Firefox](https://github.com/alrra/browser-logos/raw/master/opera/opera_64x64.png)
 ![Safari](https://github.com/alrra/browser-logos/raw/master/safari/safari_64x64.png)
 
-For browsers that do not support `createElement`, `Pellucid` should render as a translucent background without the crystalline blurred effect.
+For browsers that do not support `registerElement` we use a [`registerElement` polyfill](https://github.com/WebReflection/document-register-element) &ndash; in cases where the polyfill is insufficient `Pellucid` renders as a translucent background without the crystalline blurred effect.
 
 ---
 
