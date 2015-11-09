@@ -1,5 +1,7 @@
 # Pellucid
 
+**Note**: Eventually will utilise the [Screen Capture API](http://www.w3.org/TR/screen-capture/) when it's supported by a major browser.
+
 ![Travis](http://img.shields.io/travis/Wildhoney/Pellucid.svg?style=flat)
 &nbsp;
 ![Experimental](http://img.shields.io/badge/experimental-%E2%9C%93-blue.svg?style=flat)
