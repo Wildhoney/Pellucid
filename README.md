@@ -1,6 +1,6 @@
 # Pellucid
 
-**Note**: Eventually will utilise the [Screen Capture API](http://www.w3.org/TR/screen-capture/) when it's supported by a major browser.
+**Note**: Use [`backdrop-filter`](http://caniuse.com/#feat=css-backdrop-filter) with `filter(blur(%px))` once it's widely supported in all major browsers.
 
 ![Travis](http://img.shields.io/travis/Wildhoney/Pellucid.svg?style=flat)
 &nbsp;
