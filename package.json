@@ -6,6 +6,9 @@
   "directories": {
     "example": "example"
   },
+  "engines": {
+    "node": "4.1.1"
+  }
   "scripts": {
     "test": "gulp test"
   },
