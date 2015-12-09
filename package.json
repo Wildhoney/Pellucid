@@ -8,9 +8,10 @@
   },
   "engines": {
     "node": "4.1.1"
-  }
+  },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "cleanup": "rimraf node_modules"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.5",
-    "karma-sauce-launcher": "^0.2.10"
+    "karma-sauce-launcher": "^0.2.10",
+    "rifraf": "^2.0.2"
   }
 }
